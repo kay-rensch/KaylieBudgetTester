@@ -214,12 +214,3 @@ function subscribeToMonth() {
 
     remainingCard.classList.toggle("good", remaining >= 0);
     remainingCard.classList.toggle("bad", remaining < 0);
-  });
-}
-
-monthSelect.addEventListener("change", subscribeToMonth);
-addIncomeBtn.addEventListener("click", addIncome);
-addExpenseBtn.addEventListener("click", addExpense);
-clearMonthBtn.addEventListener("click", clearMonth);
-
-subscribeToMonth();
