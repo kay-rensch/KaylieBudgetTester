@@ -73,6 +73,34 @@ function formatCurrency(num) {
   return '$' + (Number(num) || 0).toFixed(2);
 }
 
+function formatDatePretty() {
+  const d = new Date();
+  const month = d.toLocaleString("en-US", { month: "short" });
+  const day = String(d.getDate()).padStart(2, "0");
+  const year = String(d.getFullYear()).slice(-2);
+  return `${month} ${day} ${year}`;
+}
+
+// ---------------------------------------------------------
+// MONEY RAIN
+// ---------------------------------------------------------
+function moneyRain() {
+  const container = document.getElementById("moneyRain");
+
+  for (let i = 0; i < 20; i++) {
+    const bill = document.createElement("div");
+    bill.className = "money";
+    bill.textContent = "💵";
+
+    bill.style.left = Math.random() * 100 + "vw";
+    bill.style.animationDelay = (Math.random() * 0.5) + "s";
+
+    container.appendChild(bill);
+
+    setTimeout(() => bill.remove(), 2000);
+  }
+}
+
 // ---------------------------------------------------------
 // INCOME ENTRIES
 // ---------------------------------------------------------
@@ -86,13 +114,15 @@ async function addIncome() {
   }
 
   const monthKey = getMonthKey();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = formatDatePretty();
 
   await addDoc(collection(db, `users/${USER_ID}/months/${monthKey}/incomeEntries`), {
     name,
     amount,
     date: today
   });
+
+  moneyRain();
 
   incomeName.value = "";
   incomeAmount.value = "";
@@ -117,7 +147,7 @@ async function addExpense() {
   }
 
   const monthKey = getMonthKey();
-  const today = new Date().toISOString().slice(0, 10);
+  const today = formatDatePretty();
 
   await addDoc(collection(db, `users/${USER_ID}/months/${monthKey}/expenses`), {
     name,
@@ -143,14 +173,12 @@ async function clearMonth() {
 
   const monthKey = getMonthKey();
 
-  // Delete all expenses
   const expCol = collection(db, `users/${USER_ID}/months/${monthKey}/expenses`);
   const expSnap = await getDocs(expCol);
   for (const d of expSnap.docs) {
     await deleteDoc(d.ref);
   }
 
-  // Delete all income entries
   const incCol = collection(db, `users/${USER_ID}/months/${monthKey}/incomeEntries`);
   const incSnap = await getDocs(incCol);
   for (const d of incSnap.docs) {
@@ -173,7 +201,6 @@ function subscribeToMonth() {
   if (unsubscribeIncome) unsubscribeIncome();
   if (unsubscribeExpenses) unsubscribeExpenses();
 
-  // Income listener
   unsubscribeIncome = onSnapshot(incomeCol, (snapshot) => {
     incomeTableBody.innerHTML = "";
     let totalIncome = 0;
@@ -209,7 +236,6 @@ function subscribeToMonth() {
     }
   });
 
-  // Expenses listener
   unsubscribeExpenses = onSnapshot(expCol, (snapshot) => {
     expenseTableBody.innerHTML = "";
     let total = 0;
@@ -232,35 +258,4 @@ function subscribeToMonth() {
 
     totalSpentEl.textContent = formatCurrency(total);
 
-    const totalIncome = Number(plannedIncomeEl.textContent.replace('$','')) || 0;
-    const remaining = totalIncome - total;
-
-    remainingAmountEl.textContent = formatCurrency(remaining);
-
-    if (remaining >= 0) {
-      remainingCard.classList.add("good");
-      remainingCard.classList.remove("bad");
-    } else {
-      remainingCard.classList.add("bad");
-      remainingCard.classList.remove("good");
-    }
-  });
-}
-
-// ---------------------------------------------------------
-// INIT
-// ---------------------------------------------------------
-(function init() {
-  const nowMonth = new Date().toISOString().slice(0, 7);
-  monthSelect.value = nowMonth;
-
-  monthSelect.addEventListener("change", () => {
-    subscribeToMonth();
-  });
-
-  addIncomeBtn.addEventListener("click", addIncome);
-  addExpenseBtn.addEventListener("click", addExpense);
-  clearMonthBtn.addEventListener("click", clearMonth);
-
-  subscribeToMonth();
-})();
+    const totalIncome = Number(plannedIncomeEl.textContent.replace('$','')) || 0
