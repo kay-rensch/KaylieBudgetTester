@@ -7,7 +7,7 @@
 
   <style>
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    body { margin: 0; padding: 1.5rem; background: #f5f5f7; color: #111827; padding-bottom: 80px; }
+    body { margin: 0; padding: 1.5rem; background: #f5f5f7; color: #111827; }
 
     h1 { margin-bottom: 0.25rem; }
     h2 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
@@ -23,7 +23,6 @@
 
     .row {
       display: flex;
-      flex-direction: row;
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1rem;
@@ -119,10 +118,10 @@
     /* iPhone layout fixes */
     @media (max-width: 600px) {
 
-      body { padding: 1rem; padding-bottom: 80px; }
+      body { padding: 1rem; }
       .container { padding: 1rem; }
 
-      /* FIX: Form rows must NOT be grid (iPhone input bug) */
+      /* Tight form spacing */
       .row {
         display: flex;
         flex-direction: column;
@@ -150,7 +149,7 @@
         font-size: 1rem;
       }
 
-      /* 2-column card grid for entries */
+      /* 2-column card grid ONLY on vertical iPhone */
       .entry-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -178,33 +177,6 @@
         width: 100%;
         margin-top: 0.5rem;
       }
-    }
-
-    /* iOS Bottom Navigation */
-    .ios-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #ffffff;
-      border-top: 1px solid #e5e7eb;
-      display: flex;
-      justify-content: space-around;
-      padding: 0.4rem 0;
-      z-index: 99999;
-    }
-
-    .ios-nav button {
-      background: none;
-      border: none;
-      font-size: 0.9rem;
-      padding: 0.6rem 0.5rem;
-      color: #2563eb;
-      flex: 1;
-    }
-
-    .ios-nav button:active {
-      background: #f3f4f6;
     }
   </style>
 </head>
@@ -281,17 +253,6 @@
     <button class="btn-secondary" id="clearMonthBtn">Clear this month</button>
     <div id="expenseGrid" class="entry-grid"></div>
 
-    <h2 id="settingsSection">Settings</h2>
-    <p class="small">More features coming soon.</p>
-
-  </div>
-
-  <!-- iOS Bottom Navigation -->
-  <div class="ios-nav">
-    <button data-target="topSection">Budget</button>
-    <button data-target="incomeSection">Income</button>
-    <button data-target="expenseSection">Expenses</button>
-    <button data-target="settingsSection">Settings</button>
   </div>
 
   <script type="module" src="app.js"></script>
