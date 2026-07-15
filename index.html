@@ -48,25 +48,13 @@
       </div>
     </div>
 
-    <h2>Budget setup</h2>
-    <div class="row">
-      <div>
-        <label for="incomeInput">Planned income for this month</label>
-        <input type="number" id="incomeInput" min="0" step="0.01" placeholder="e.g. 3500" />
-      </div>
-      <div>
-        <label>&nbsp;</label>
-        <button class="btn-primary" id="saveBudgetBtn">Save budget</button>
-      </div>
-    </div>
-
     <div class="summary">
       <div class="card">
-        <div class="card-title">Planned income</div>
+        <div class="card-title">Total Income</div>
         <div class="card-value" id="plannedIncome">$0.00</div>
       </div>
       <div class="card">
-        <div class="card-title">Total spent</div>
+        <div class="card-title">Total Spent</div>
         <div class="card-value" id="totalSpent">$0.00</div>
       </div>
       <div class="card" id="remainingCard">
@@ -75,51 +63,23 @@
       </div>
     </div>
 
-    <!-- RECURRING EXPENSES SECTION -->
-    <h2>Recurring Monthly Expenses</h2>
+    <h2>Add Income</h2>
     <div class="row">
       <div>
-        <label for="recName">Name</label>
-        <input type="text" id="recName" placeholder="Rent, Phone Bill, Insurance..." />
+        <label for="incomeName">Name</label>
+        <input type="text" id="incomeName" placeholder="Paycheck, Bonus..." />
       </div>
       <div>
-        <label for="recCategory">Category</label>
-        <select id="recCategory">
-          <option value="Housing">Housing</option>
-          <option value="Food">Food</option>
-          <option value="Transportation">Transportation</option>
-          <option value="Utilities">Utilities</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Debt">Debt</option>
-          <option value="Savings">Savings</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div>
-        <label for="recAmount">Amount</label>
-        <input type="number" id="recAmount" min="0" step="0.01" placeholder="e.g. 120.00" />
+        <label for="incomeAmount">Amount</label>
+        <input type="number" id="incomeAmount" min="0" step="0.01" placeholder="e.g. 1500.00" />
       </div>
       <div>
         <label>&nbsp;</label>
-        <button class="btn-primary" id="addRecurringBtn">Add recurring</button>
+        <button class="btn-primary" id="addIncomeBtn">Add income</button>
       </div>
     </div>
 
-    <button class="btn-secondary" id="applyRecurringBtn">Apply recurring to this month</button>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th class="right">Amount</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="recurringTableBody"></tbody>
-    </table>
-
-    <h2>Add expense</h2>
+    <h2>Add Expense</h2>
     <div class="row">
       <div>
         <label for="expenseName">Name</label>
@@ -128,13 +88,10 @@
       <div>
         <label for="expenseCategory">Category</label>
         <select id="expenseCategory">
-          <option value="Housing">Housing</option>
           <option value="Food">Food</option>
-          <option value="Transportation">Transportation</option>
-          <option value="Utilities">Utilities</option>
           <option value="Entertainment">Entertainment</option>
-          <option value="Debt">Debt</option>
-          <option value="Savings">Savings</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Personal Care">Personal Care</option>
           <option value="Other">Other</option>
         </select>
       </div>
@@ -147,6 +104,21 @@
         <button class="btn-primary" id="addExpenseBtn">Add expense</button>
       </div>
     </div>
+
+    <div class="header-row">
+      <h2>Income Entries</h2>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th class="right">Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="incomeTableBody"></tbody>
+    </table>
 
     <div class="header-row">
       <h2>Expenses</h2>
