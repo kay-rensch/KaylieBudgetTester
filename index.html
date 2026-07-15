@@ -8,15 +8,13 @@
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     body { margin: 0; padding: 1.5rem; background: #f5f5f7; color: #111827; }
 
-    /* Centered title */
     h1 {
-      margin-bottom: 0.25rem;
       text-align: center;
       font-size: 1.8rem;
       font-weight: 700;
+      margin-bottom: 0.25rem;
     }
 
-    /* Month title styled like card titles */
     .month-title {
       text-align: center;
       font-size: 0.8rem;
@@ -27,8 +25,6 @@
       margin-bottom: 0.25rem;
     }
 
-    h2 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
-
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -38,32 +34,18 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     }
 
-    .row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
-    .row > div { flex: 1 1 200px; }
-
-    label { display: block; font-size: 0.85rem; margin-bottom: 0.25rem; color: #4b5563; }
-
     input, select {
       width: 100%;
-      padding: 0.5rem 0.6rem;
+      padding: 0.6rem;
       border-radius: 0.5rem;
       border: 1px solid #d1d5db;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
-    /* Longer month selector */
     #monthSelect {
       width: 260px;
-      padding: 0.6rem;
-      font-size: 1rem;
       margin: 0 auto;
       display: block;
-    }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: #2563eb;
-      box-shadow: 0 0 0 1px #2563eb33;
     }
 
     button {
@@ -74,15 +56,14 @@
       cursor: pointer;
     }
 
-    .btn-primary { background: #2563eb; color: #ffffff; }
-    .btn-secondary { background: #e5e7eb; color: #111827; }
-    .btn-danger { background: #ef4444; color: #ffffff; }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-danger { background: #ef4444; color: #fff; }
 
     .summary {
       display: flex;
-      flex-wrap: wrap;
       gap: 1rem;
       margin: 1rem 0;
+      flex-wrap: wrap;
     }
 
     .card {
@@ -96,7 +77,6 @@
     .card-title {
       font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
       color: #6b7280;
       margin-bottom: 0.25rem;
     }
@@ -106,30 +86,16 @@
       font-weight: 600;
     }
 
-    .card.good { border-color: #22c55e33; background: #ecfdf3; }
-    .card.bad { border-color: #ef444433; background: #fef2f2; }
-
     table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
-    th, td { padding: 0.5rem; font-size: 0.9rem; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    th, td { padding: 0.5rem; border-bottom: 1px solid #e5e7eb; }
     th { background: #f3f4f6; font-weight: 600; }
-    tr:nth-child(even) td { background: #f9fafb; }
     .right { text-align: right; }
 
     .category-pill {
-      display: inline-block;
       padding: 0.15rem 0.5rem;
       border-radius: 999px;
-      font-size: 0.75rem;
       background: #e5e7eb;
-      color: #374151;
-    }
-
-    .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center !important;
-      gap: 1rem;
-      flex-wrap: wrap;
+      font-size: 0.75rem;
     }
 
     /* MONEY RAIN */
@@ -162,7 +128,6 @@
 
     <h1>Kaylie's Budget</h1>
 
-    <!-- Month Title -->
     <div class="month-title">Month</div>
     <input type="month" id="monthSelect" />
 
@@ -181,18 +146,17 @@
       </div>
     </div>
 
-    <!-- Clear Month BEFORE Add Income -->
     <button class="btn-danger" id="clearMonthBtn" style="margin-bottom:1rem;">Clear this month</button>
 
     <h2>Add Income</h2>
     <div class="row">
       <div>
-        <label for="incomeName">Name</label>
-        <input type="text" id="incomeName" placeholder="Paycheck, Bonus..." />
+        <label>Name</label>
+        <input type="text" id="incomeName" />
       </div>
       <div>
-        <label for="incomeAmount">Amount</label>
-        <input type="number" id="incomeAmount" min="0" step="0.01" placeholder="e.g. 1500.00" />
+        <label>Amount</label>
+        <input type="number" id="incomeAmount" min="0" step="0.01" />
       </div>
       <div>
         <label>&nbsp;</label>
@@ -203,11 +167,11 @@
     <h2>Add Expense</h2>
     <div class="row">
       <div>
-        <label for="expenseName">Name</label>
-        <input type="text" id="expenseName" placeholder="Groceries, Rent, Uber..." />
+        <label>Name</label>
+        <input type="text" id="expenseName" />
       </div>
       <div>
-        <label for="expenseCategory">Category</label>
+        <label>Category</label>
         <select id="expenseCategory">
           <option value="Food">Food</option>
           <option value="Entertainment">Entertainment</option>
@@ -217,8 +181,8 @@
         </select>
       </div>
       <div>
-        <label for="expenseAmount">Amount</label>
-        <input type="number" id="expenseAmount" min="0" step="0.01" placeholder="e.g. 45.90" />
+        <label>Amount</label>
+        <input type="number" id="expenseAmount" min="0" step="0.01" />
       </div>
       <div>
         <label>&nbsp;</label>
@@ -226,10 +190,7 @@
       </div>
     </div>
 
-    <div class="header-row">
-      <h2>Income</h2>
-    </div>
-
+    <h2>Income</h2>
     <table>
       <thead>
         <tr>
@@ -242,10 +203,7 @@
       <tbody id="incomeTableBody"></tbody>
     </table>
 
-    <div class="header-row">
-      <h2>Expenses</h2>
-    </div>
-
+    <h2>Expenses</h2>
     <table>
       <thead>
         <tr>
