@@ -25,10 +25,14 @@
       margin-bottom: 0.25rem;
     }
 
-    /* NEW: spacing class */
     .section-spaced {
       margin-top: 2rem;
       margin-bottom: 1.5rem;
+    }
+
+    /* NEW: move buttons down slightly */
+    .move-down {
+      margin-top: 0.6rem;
     }
 
     .container {
@@ -92,10 +96,9 @@
       font-weight: 600;
     }
 
-    /* NEW: Remaining card always slightly green */
     #remainingCard {
-      background: #f0fdf4;   /* soft green */
-      border-color: #86efac; /* light green border */
+      background: #f0fdf4;
+      border-color: #86efac;
     }
 
     table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
@@ -110,7 +113,6 @@
       font-size: 0.75rem;
     }
 
-    /* MONEY RAIN */
     .money-rain {
       position: fixed;
       top: 0;
@@ -160,7 +162,6 @@
 
     <button class="btn-danger" id="clearMonthBtn" style="margin-bottom:1rem;">Clear this month</button>
 
-    <!-- Add Income with spacing -->
     <h2 class="section-spaced">Add Income</h2>
     <div class="row">
       <div>
@@ -173,11 +174,10 @@
       </div>
       <div>
         <label>&nbsp;</label>
-        <button class="btn-primary" id="addIncomeBtn">Add income</button>
+        <button class="btn-primary move-down" id="addIncomeBtn">Add income</button>
       </div>
     </div>
 
-    <!-- Add Expense with spacing -->
     <h2 class="section-spaced">Add Expense</h2>
     <div class="row">
       <div>
@@ -200,7 +200,7 @@
       </div>
       <div>
         <label>&nbsp;</label>
-        <button class="btn-primary" id="addExpenseBtn">Add expense</button>
+        <button class="btn-primary move-down" id="addExpenseBtn">Add expense</button>
       </div>
     </div>
 
