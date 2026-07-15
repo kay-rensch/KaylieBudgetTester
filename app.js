@@ -52,7 +52,7 @@ function formatCurrency(num) {
   return '$' + (Number(num) || 0).toFixed(2);
 }
 
-/* iPhone Confetti */
+/* Confetti */
 function launchConfetti() {
   const count = 45;
 
