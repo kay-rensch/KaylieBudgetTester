@@ -1,7 +1,13 @@
+// ---------------------------------------------------------
+// Firebase imports
+// ---------------------------------------------------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getFirestore,
   doc,
+  setDoc,
+  getDoc,
+  updateDoc,
   deleteDoc,
   collection,
   addDoc,
@@ -9,6 +15,9 @@ import {
   onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+// ---------------------------------------------------------
+// Firebase config
+// ---------------------------------------------------------
 const firebaseConfig = {
   apiKey: "AIzaSyBjmJlr2Y6I_MxJLmOMwJeZEs-R8-dGyBU",
   authDomain: "kaylies-budget.firebaseapp.com",
@@ -19,11 +28,20 @@ const firebaseConfig = {
   measurementId: "G-B4KVDF25RY"
 };
 
+// ---------------------------------------------------------
+// Init Firebase + Firestore
+// ---------------------------------------------------------
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// ---------------------------------------------------------
+// CONSTANTS
+// ---------------------------------------------------------
 const USER_ID = "default";
 
+// ---------------------------------------------------------
+// DOM ELEMENTS
+// ---------------------------------------------------------
 const monthSelect = document.getElementById('monthSelect');
 
 const plannedIncomeEl = document.getElementById('plannedIncome');
@@ -44,6 +62,9 @@ const expenseTableBody = document.getElementById('expenseTableBody');
 
 const clearMonthBtn = document.getElementById('clearMonthBtn');
 
+// ---------------------------------------------------------
+// HELPERS
+// ---------------------------------------------------------
 function getMonthKey() {
   return monthSelect.value || new Date().toISOString().slice(0, 7);
 }
@@ -52,18 +73,9 @@ function formatCurrency(num) {
   return '$' + (Number(num) || 0).toFixed(2);
 }
 
-function launchConfetti() {
-  for (let i = 0; i < 40; i++) {
-    const c = document.createElement("div");
-    c.classList.add("confetti");
-    c.style.setProperty("--hue", Math.floor(Math.random() * 360));
-    c.style.left = Math.random() * window.innerWidth + "px";
-    c.style.animationDelay = (Math.random() * 0.5) + "s";
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 2500);
-  }
-}
-
+// ---------------------------------------------------------
+// INCOME ENTRIES
+// ---------------------------------------------------------
 async function addIncome() {
   const name = incomeName.value.trim();
   const amount = Number(incomeAmount.value);
@@ -84,8 +96,6 @@ async function addIncome() {
 
   incomeName.value = "";
   incomeAmount.value = "";
-
-  launchConfetti();
 }
 
 async function deleteIncome(id) {
@@ -93,6 +103,9 @@ async function deleteIncome(id) {
   await deleteDoc(doc(db, `users/${USER_ID}/months/${monthKey}/incomeEntries/${id}`));
 }
 
+// ---------------------------------------------------------
+// EXPENSES
+// ---------------------------------------------------------
 async function addExpense() {
   const name = expenseName.value.trim();
   const category = expenseCategory.value;
@@ -122,20 +135,32 @@ async function deleteExpense(id) {
   await deleteDoc(doc(db, `users/${USER_ID}/months/${monthKey}/expenses/${id}`));
 }
 
+// ---------------------------------------------------------
+// CLEAR MONTH
+// ---------------------------------------------------------
 async function clearMonth() {
   if (!confirm("Clear all data for this month?")) return;
 
   const monthKey = getMonthKey();
 
+  // Delete all expenses
   const expCol = collection(db, `users/${USER_ID}/months/${monthKey}/expenses`);
   const expSnap = await getDocs(expCol);
-  for (const d of expSnap.docs) await deleteDoc(d.ref);
+  for (const d of expSnap.docs) {
+    await deleteDoc(d.ref);
+  }
 
+  // Delete all income entries
   const incCol = collection(db, `users/${USER_ID}/months/${monthKey}/incomeEntries`);
   const incSnap = await getDocs(incCol);
-  for (const d of incSnap.docs) await deleteDoc(d.ref);
+  for (const d of incSnap.docs) {
+    await deleteDoc(d.ref);
+  }
 }
 
+// ---------------------------------------------------------
+// REAL-TIME LISTENERS
+// ---------------------------------------------------------
 let unsubscribeIncome = null;
 let unsubscribeExpenses = null;
 
@@ -148,6 +173,7 @@ function subscribeToMonth() {
   if (unsubscribeIncome) unsubscribeIncome();
   if (unsubscribeExpenses) unsubscribeExpenses();
 
+  // Income listener
   unsubscribeIncome = onSnapshot(incomeCol, (snapshot) => {
     incomeTableBody.innerHTML = "";
     let totalIncome = 0;
@@ -183,6 +209,7 @@ function subscribeToMonth() {
     }
   });
 
+  // Expenses listener
   unsubscribeExpenses = onSnapshot(expCol, (snapshot) => {
     expenseTableBody.innerHTML = "";
     let total = 0;
@@ -220,6 +247,9 @@ function subscribeToMonth() {
   });
 }
 
+// ---------------------------------------------------------
+// INIT
+// ---------------------------------------------------------
 (function init() {
   const nowMonth = new Date().toISOString().slice(0, 7);
   monthSelect.value = nowMonth;
