@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Kaylie's Monthly Budget Tracker</title>
+  <title>Kaylie's Budget</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
@@ -14,6 +14,17 @@
       text-align: center;
       font-size: 1.8rem;
       font-weight: 700;
+    }
+
+    /* Month title styled like card titles */
+    .month-title {
+      text-align: center;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
     }
 
     h2 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
@@ -42,9 +53,11 @@
 
     /* Longer month selector */
     #monthSelect {
-      width: 240px;
+      width: 260px;
       padding: 0.6rem;
       font-size: 1rem;
+      margin: 0 auto;
+      display: block;
     }
 
     input:focus, select:focus {
@@ -147,13 +160,11 @@
 
   <div class="container">
 
-    <h1>Kaylie's Monthly Budget</h1>
+    <h1>Kaylie's Budget</h1>
 
-    <!-- Centered Month Title -->
-    <h2 style="text-align:center; margin-top:1rem;">Month</h2>
-    <div class="header-row" style="justify-content:center; margin-bottom:1rem;">
-      <input type="month" id="monthSelect" />
-    </div>
+    <!-- Month Title -->
+    <div class="month-title">Month</div>
+    <input type="month" id="monthSelect" />
 
     <div class="summary">
       <div class="card">
@@ -216,7 +227,7 @@
     </div>
 
     <div class="header-row">
-      <h2>Income Entries</h2>
+      <h2>Income</h2>
     </div>
 
     <table>
