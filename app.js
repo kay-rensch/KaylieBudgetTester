@@ -237,4 +237,13 @@ function subscribeToMonth() {
 }
 
 (function init() {
-  const nowMonth = new Date
+  const nowMonth = new Date().toISOString().slice(0, 7);
+  monthSelect.value = nowMonth;
+
+  monthSelect.addEventListener("change", subscribeToMonth);
+  addIncomeBtn.addEventListener("click", addIncome);
+  addExpenseBtn.addEventListener("click", addExpense);
+  clearMonthBtn.addEventListener("click", clearMonth);
+
+  subscribeToMonth();
+})();
