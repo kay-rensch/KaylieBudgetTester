@@ -23,6 +23,7 @@
 
     .row {
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1rem;
@@ -121,11 +122,11 @@
       body { padding: 1rem; padding-bottom: 80px; }
       .container { padding: 1rem; }
 
-      /* Tight vertical spacing */
+      /* FIX: Form rows must NOT be grid (iPhone input bug) */
       .row {
-        display: grid;
-        grid-template-columns: 1fr;
-        row-gap: 0.35rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
         margin-bottom: 1rem;
       }
 
