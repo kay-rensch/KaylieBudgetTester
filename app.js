@@ -205,9 +205,4 @@ function subscribeToMonth() {
 
     totalSpentEl.textContent = formatCurrency(total);
 
-    const totalIncome = Number(plannedIncomeEl.textContent.replace('$','')) || 0;
-    const remaining = totalIncome - total;
-
-    remainingAmountEl.textContent = formatCurrency(remaining);
-
-    remainingCard.class
+    const totalIncome = Number(plannedIncomeEl.textContent.replace('$
