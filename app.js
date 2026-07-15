@@ -52,18 +52,13 @@ function formatCurrency(num) {
   return '$' + (Number(num) || 0).toFixed(2);
 }
 
-/* iPhone Confetti */
 function launchConfetti() {
-  const count = 45;
-
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < 40; i++) {
     const c = document.createElement("div");
     c.classList.add("confetti");
-
     c.style.setProperty("--hue", Math.floor(Math.random() * 360));
     c.style.left = Math.random() * window.innerWidth + "px";
-    c.style.animationDelay = (Math.random() * 0.4) + "s";
-
+    c.style.animationDelay = (Math.random() * 0.5) + "s";
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 2500);
   }
@@ -163,10 +158,10 @@ function subscribeToMonth() {
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>Date: ${inc.date}</td>
-        <td>Name: ${inc.name}</td>
-        <td>Amount: ${formatCurrency(inc.amount)}</td>
-        <td><button class="btn-danger">Delete</button></td>
+        <td>${inc.date}</td>
+        <td>${inc.name}</td>
+        <td class="right">${formatCurrency(inc.amount)}</td>
+        <td><button class="btn-danger" style="font-size:0.8rem">Delete</button></td>
       `;
       tr.querySelector("button").onclick = () => deleteIncome(inc.id);
       incomeTableBody.appendChild(tr);
@@ -179,8 +174,13 @@ function subscribeToMonth() {
 
     remainingAmountEl.textContent = formatCurrency(remaining);
 
-    remainingCard.classList.toggle("good", remaining >= 0);
-    remainingCard.classList.toggle("bad", remaining < 0);
+    if (remaining >= 0) {
+      remainingCard.classList.add("good");
+      remainingCard.classList.remove("bad");
+    } else {
+      remainingCard.classList.add("bad");
+      remainingCard.classList.remove("good");
+    }
   });
 
   unsubscribeExpenses = onSnapshot(expCol, (snapshot) => {
@@ -193,11 +193,11 @@ function subscribeToMonth() {
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>Date: ${exp.date}</td>
-        <td>Name: ${exp.name}</td>
-        <td>Category: <span class="category-pill">${exp.category}</span></td>
-        <td>Amount: ${formatCurrency(exp.amount)}</td>
-        <td><button class="btn-danger">Delete</button></td>
+        <td>${exp.date}</td>
+        <td>${exp.name}</td>
+        <td><span class="category-pill">${exp.category}</span></td>
+        <td class="right">${formatCurrency(exp.amount)}</td>
+        <td><button class="btn-danger" style="font-size:0.8rem">Delete</button></td>
       `;
       tr.querySelector("button").onclick = () => deleteExpense(exp.id);
       expenseTableBody.appendChild(tr);
@@ -210,25 +210,27 @@ function subscribeToMonth() {
 
     remainingAmountEl.textContent = formatCurrency(remaining);
 
-    remainingCard.classList.toggle("good", remaining >= 0);
-    remainingCard.classList.toggle("bad", remaining < 0);
+    if (remaining >= 0) {
+      remainingCard.classList.add("good");
+      remainingCard.classList.remove("bad");
+    } else {
+      remainingCard.classList.add("bad");
+      remainingCard.classList.remove("good");
+    }
   });
 }
-
-/* iOS Bottom Navigation Scroll */
-document.querySelectorAll(".ios-nav button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const targetId = btn.getAttribute("data-target");
-    const el = document.getElementById(targetId);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-});
 
 (function init() {
   const nowMonth = new Date().toISOString().slice(0, 7);
   monthSelect.value = nowMonth;
 
-  monthSelect.addEventListener("change", subscribeToMonth);
+  monthSelect.addEventListener("change", () => {
+    subscribeToMonth();
+  });
 
   addIncomeBtn.addEventListener("click", addIncome);
-  add
+  addExpenseBtn.addEventListener("click", addExpense);
+  clearMonthBtn.addEventListener("click", clearMonth);
+
+  subscribeToMonth();
+})();
