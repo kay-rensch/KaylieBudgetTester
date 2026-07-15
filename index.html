@@ -115,27 +115,44 @@
       100% { transform: translateY(110vh) rotate(360deg); opacity: 0.2; }
     }
 
-    /* iPhone layout fixes */
-    @media (max-width: 600px) {
+    /* FULL-WIDTH STACKED CARDS ALWAYS */
+    .entry-grid {
+      display: block !important;
+    }
 
+    .entry-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 0.6rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      margin-bottom: 0.75rem;
+    }
+
+    .entry-card div {
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+    }
+
+    .entry-card div span {
+      font-weight: 600;
+      color: #111;
+    }
+
+    .entry-card button {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* iPhone form spacing */
+    @media (max-width: 600px) {
       body { padding: 1rem; }
       .container { padding: 1rem; }
 
-      /* Tight form spacing */
       .row {
         display: flex;
         flex-direction: column;
         gap: 0.35rem;
         margin-bottom: 1rem;
-      }
-
-      .row > div {
-        margin: 0;
-        padding: 0;
-      }
-
-      label {
-        margin-bottom: 0.25rem;
       }
 
       input, select {
@@ -146,35 +163,74 @@
       button {
         width: 100%;
         margin-top: 0.4rem;
-        font-size: 1rem;
+      }
+    }
+
+    /* DARK MODE */
+    @media (prefers-color-scheme: dark) {
+
+      body {
+        background: #0d0d0f;
+        color: #e5e5e7;
       }
 
-      /* OLD SPACING RESTORED: full-width stacked cards */
-      .entry-grid {
-        display: block;
+      .container {
+        background: #1a1a1d;
+        box-shadow: none;
+        border: 1px solid #2a2a2d;
+      }
+
+      input, select {
+        background: #2a2a2d;
+        color: #f5f5f7;
+        border: 1px solid #3a3a3d;
+      }
+
+      label {
+        color: #c5c5c7;
+      }
+
+      .btn-primary {
+        background: #3b82f6;
+        color: white;
+      }
+
+      .btn-secondary {
+        background: #3a3a3d;
+        color: #e5e5e7;
+      }
+
+      .btn-danger {
+        background: #ef4444;
+        color: white;
+      }
+
+      .card {
+        background: #2a2a2d;
+        border-color: #3a3a3d;
+      }
+
+      .card-title {
+        color: #b5b5b7;
+      }
+
+      .card-value {
+        color: #f5f5f7;
       }
 
       .entry-card {
-        background: #fff;
-        padding: 1rem;
-        border-radius: 0.6rem;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-        margin-bottom: 0.75rem;
-      }
-
-      .entry-card div {
-        margin-bottom: 0.35rem;
-        font-size: 0.95rem;
+        background: #2a2a2d;
+        border-color: #3a3a3d;
+        box-shadow: none;
       }
 
       .entry-card div span {
-        font-weight: 600;
-        color: #111;
+        color: #f5f5f7;
       }
 
-      .entry-card button {
-        width: 100%;
-        margin-top: 0.5rem;
+      .category-pill {
+        background: #3a3a3d;
+        color: #e5e5e7;
       }
     }
   </style>
@@ -183,7 +239,7 @@
 <body>
   <div class="container">
 
-    <h1 id="topSection">Kaylie's Monthly Budget</h1>
+    <h1>Kaylie's Monthly Budget</h1>
 
     <div class="summary">
       <div class="card">
@@ -203,7 +259,7 @@
     <label for="monthSelect">Month</label>
     <input type="month" id="monthSelect" />
 
-    <h2 id="incomeSection">Add Income</h2>
+    <h2>Add Income</h2>
     <div class="row">
       <div>
         <label>Name</label>
@@ -219,7 +275,7 @@
       </div>
     </div>
 
-    <h2 id="expenseSection">Add Expense</h2>
+    <h2>Add Expense</h2>
     <div class="row">
       <div>
         <label>Name</label>
