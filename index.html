@@ -21,10 +21,24 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     }
 
-    .row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
-    .row > div { flex: 1 1 200px; }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
 
-    label { display: block; font-size: 0.85rem; margin-bottom: 0.25rem; color: #4b5563; }
+    .row > div {
+      flex: 1 1 200px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+      color: #4b5563;
+    }
+
     input, select {
       width: 100%;
       padding: 0.6rem;
@@ -103,33 +117,38 @@
 
     /* iPhone layout fixes */
     @media (max-width: 600px) {
-      body { padding: 1rem; padding-bottom: 80px; }
 
+      body { padding: 1rem; padding-bottom: 80px; }
       .container { padding: 1rem; }
 
-      .row { flex-direction: column; gap: 0.5rem; }
+      /* FIX: Vertical spacing for Add Income & Add Expense */
+      .row {
+        flex-direction: column;
+        gap: 0.4rem;
+        margin-bottom: 1rem;
+      }
 
-      input, select { font-size: 1rem; padding: 0.7rem; }
-      button { width: 100%; font-size: 1rem; }
-
-      /* Fix spacing for Add Income */
-      #incomeSection + .row > div,
-      #expenseSection + .row > div {
+      .row > div {
         margin: 0;
         padding: 0;
       }
 
-      #incomeSection + .row label,
-      #expenseSection + .row label {
-        margin-bottom: 0.3rem;
+      label {
+        margin-bottom: 0.25rem;
       }
 
-      #addIncomeBtn,
-      #addExpenseBtn {
+      input, select {
+        padding: 0.7rem;
+        font-size: 1rem;
+      }
+
+      button {
+        width: 100%;
         margin-top: 0.3rem;
+        font-size: 1rem;
       }
 
-      /* Turn tables into stacked cards */
+      /* FIX: Income & Expense entries formatting */
       table thead { display: none; }
 
       #incomeTableBody tr,
@@ -146,7 +165,7 @@
       #expenseTableBody td {
         display: flex;
         justify-content: space-between;
-        padding: 0.4rem 0;
+        padding: 0.35rem 0;
         border-bottom: none;
         font-size: 1rem;
       }
