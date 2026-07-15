@@ -213,9 +213,4 @@ function subscribeToMonth() {
     remainingAmountEl.textContent = formatCurrency(remaining);
 
     remainingCard.classList.toggle("good", remaining >= 0);
-    remainingCard.classList.toggle("bad", remaining < 0);
-  });
-}
-
-/* iOS Bottom Navigation Scroll */
-document.querySelectorAll(".ios-nav button").for
+    remainingCard.classList.toggle("bad
