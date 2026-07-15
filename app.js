@@ -1,6 +1,3 @@
-// ---------------------------------------------------------
-// Firebase imports
-// ---------------------------------------------------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getFirestore,
@@ -12,9 +9,6 @@ import {
   onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// ---------------------------------------------------------
-// Firebase config
-// ---------------------------------------------------------
 const firebaseConfig = {
   apiKey: "AIzaSyBjmJlr2Y6I_MxJLmOMwJeZEs-R8-dGyBU",
   authDomain: "kaylies-budget.firebaseapp.com",
@@ -25,22 +19,12 @@ const firebaseConfig = {
   measurementId: "G-B4KVDF25RY"
 };
 
-// ---------------------------------------------------------
-// Init Firebase + Firestore
-// ---------------------------------------------------------
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ---------------------------------------------------------
-// CONSTANTS
-// ---------------------------------------------------------
 const USER_ID = "default";
 
-// ---------------------------------------------------------
-// DOM ELEMENTS
-// ---------------------------------------------------------
 const monthSelect = document.getElementById('monthSelect');
-
 const plannedIncomeEl = document.getElementById('plannedIncome');
 const totalSpentEl = document.getElementById('totalSpent');
 const remainingAmountEl = document.getElementById('remainingAmount');
@@ -59,9 +43,6 @@ const expenseTableBody = document.getElementById('expenseTableBody');
 
 const clearMonthBtn = document.getElementById('clearMonthBtn');
 
-// ---------------------------------------------------------
-// HELPERS
-// ---------------------------------------------------------
 function getMonthKey() {
   return monthSelect.value || new Date().toISOString().slice(0, 7);
 }
@@ -78,9 +59,6 @@ function formatDatePretty() {
   return `${month} ${day} ${year}`;
 }
 
-// ---------------------------------------------------------
-// MONEY RAIN
-// ---------------------------------------------------------
 function moneyRain() {
   const container = document.getElementById("moneyRain");
 
@@ -98,9 +76,6 @@ function moneyRain() {
   }
 }
 
-// ---------------------------------------------------------
-// INCOME ENTRIES
-// ---------------------------------------------------------
 async function addIncome() {
   const name = incomeName.value.trim();
   const amount = Number(incomeAmount.value);
@@ -130,9 +105,6 @@ async function deleteIncome(id) {
   await deleteDoc(doc(db, `users/${USER_ID}/months/${monthKey}/incomeEntries/${id}`));
 }
 
-// ---------------------------------------------------------
-// EXPENSES
-// ---------------------------------------------------------
 async function addExpense() {
   const name = expenseName.value.trim();
   const category = expenseCategory.value;
@@ -162,9 +134,6 @@ async function deleteExpense(id) {
   await deleteDoc(doc(db, `users/${USER_ID}/months/${monthKey}/expenses/${id}`));
 }
 
-// ---------------------------------------------------------
-// CLEAR MONTH
-// ---------------------------------------------------------
 async function clearMonth() {
   if (!confirm("Clear all data for this month?")) return;
 
@@ -183,9 +152,6 @@ async function clearMonth() {
   }
 }
 
-// ---------------------------------------------------------
-// REAL-TIME LISTENERS
-// ---------------------------------------------------------
 let unsubscribeIncome = null;
 let unsubscribeExpenses = null;
 
@@ -261,3 +227,14 @@ function subscribeToMonth() {
     remainingAmountEl.textContent = formatCurrency(remaining);
 
     if (remaining >= 0) {
+      remainingCard.classList.add("good");
+      remainingCard.classList.remove("bad");
+    } else {
+      remainingCard.classList.add("bad");
+      remainingCard.classList.remove("good");
+    }
+  });
+}
+
+(function init() {
+  const nowMonth = new Date
