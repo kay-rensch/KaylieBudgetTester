@@ -5,9 +5,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import {
   getFirestore,
   doc,
-  setDoc,
-  getDoc,
-  updateDoc,
   deleteDoc,
   collection,
   addDoc,
@@ -87,7 +84,7 @@ function formatDatePretty() {
 function moneyRain() {
   const container = document.getElementById("moneyRain");
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 25; i++) {
     const bill = document.createElement("div");
     bill.className = "money";
     bill.textContent = "💵";
@@ -258,4 +255,9 @@ function subscribeToMonth() {
 
     totalSpentEl.textContent = formatCurrency(total);
 
-    const totalIncome = Number(plannedIncomeEl.textContent.replace('$','')) || 0
+    const totalIncome = Number(plannedIncomeEl.textContent.replace('$','')) || 0;
+    const remaining = totalIncome - total;
+
+    remainingAmountEl.textContent = formatCurrency(remaining);
+
+    if (remaining >= 0) {
