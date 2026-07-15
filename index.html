@@ -6,174 +6,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    body { margin: 0; padding: 1.5rem; background: #f5f5f7; color: #111827; padding-bottom: 70px; }
-
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; padding: 1.5rem; background: #f5f5f7; color: #111827; }
     h1 { margin-bottom: 0.25rem; }
     h2 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 1.5rem;
-      border-radius: 0.75rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    }
-
+    .container { max-width: 900px; margin: 0 auto; background: #ffffff; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
     .row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
     .row > div { flex: 1 1 200px; }
-
     label { display: block; font-size: 0.85rem; margin-bottom: 0.25rem; color: #4b5563; }
-    input, select {
-      width: 100%;
-      padding: 0.6rem;
-      border-radius: 0.5rem;
-      border: 1px solid #d1d5db;
-      font-size: 0.95rem;
-    }
-
-    button {
-      border: none;
-      border-radius: 0.5rem;
-      padding: 0.7rem 1rem;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
-
+    input, select { width: 100%; padding: 0.5rem 0.6rem; border-radius: 0.5rem; border: 1px solid #d1d5db; font-size: 0.95rem; }
+    input:focus, select:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 1px #2563eb33; }
+    button { border: none; border-radius: 0.5rem; padding: 0.55rem 1rem; font-size: 0.95rem; cursor: pointer; }
     .btn-primary { background: #2563eb; color: #ffffff; }
     .btn-secondary { background: #e5e7eb; color: #111827; }
     .btn-danger { background: #ef4444; color: #ffffff; }
-
-    .summary {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-
-    .card {
-      flex: 1 1 150px;
-      background: #f9fafb;
-      border-radius: 0.75rem;
-      padding: 0.75rem 1rem;
-      border: 1px solid #e5e7eb;
-    }
-
-    .card-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #6b7280;
-      margin-bottom: 0.25rem;
-    }
-
+    .summary { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+    .card { flex: 1 1 150px; background: #f9fafb; border-radius: 0.75rem; padding: 0.75rem 1rem; border: 1px solid #e5e7eb; }
+    .card-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; margin-bottom: 0.25rem; }
     .card-value { font-size: 1.1rem; font-weight: 600; }
+    .card.good { border-color: #22c55e33; background: #ecfdf3; }
+    .card.bad { border-color: #ef444433; background: #fef2f2; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+    th, td { padding: 0.5rem; font-size: 0.9rem; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    th { background: #f3f4f6; font-weight: 600; }
+    tr:nth-child(even) td { background: #f9fafb; }
+    .right { text-align: right; }
+    .category-pill { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px; font-size: 0.75rem; background: #e5e7eb; color: #374151; }
+    .header-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .small { font-size: 0.8rem; color: #6b7280; }
 
-    .card.good { background: #ecfdf3; border-color: #22c55e33; }
-    .card.bad { background: #fef2f2; border-color: #ef444433; }
-
-    .category-pill {
-      display: inline-block;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      background: #e5e7eb;
-      color: #374151;
-    }
-
-    /* Confetti (iPhone optimized) */
+    /* Confetti */
     .confetti {
       position: fixed;
-      top: -20px;
-      width: 10px;
-      height: 16px;
+      top: -10px;
+      width: 8px;
+      height: 14px;
       background-color: hsl(var(--hue), 80%, 60%);
-      opacity: 0.95;
-      transform: translateZ(0) rotate(15deg);
+      opacity: 0.9;
+      transform: rotate(15deg);
       animation: fall 2.2s linear forwards;
-      z-index: 999999;
-      will-change: transform;
+      z-index: 9999;
     }
-
     @keyframes fall {
-      0% { transform: translateZ(0) translateY(0) rotate(0deg); }
-      100% { transform: translateZ(0) translateY(110vh) rotate(360deg); opacity: 0.2; }
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.2;
+      }
     }
 
-    /* iPhone layout fixes */
+    /* iPhone optimization */
     @media (max-width: 600px) {
-      body { padding: 1rem; padding-bottom: 80px; }
-
-      .container { padding: 1rem; }
-
+      body { padding: 1rem; }
+      .container { padding: 1rem; border-radius: 0.5rem; }
+      h1 { font-size: 1.4rem; }
+      h2 { font-size: 1.2rem; }
       .row { flex-direction: column; gap: 0.75rem; }
-
+      .row > div { flex: 1 1 auto; }
       input, select { font-size: 1rem; padding: 0.7rem; }
-      button { width: 100%; font-size: 1rem; }
-
-      /* Turn tables into stacked cards */
-      table thead { display: none; }
-
-      #expenseTableBody tr,
-      #incomeTableBody tr {
-        display: block;
-        background: #fff;
-        margin-bottom: 0.75rem;
-        padding: 0.75rem;
-        border-radius: 0.6rem;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-      }
-
-      #expenseTableBody td,
-      #incomeTableBody td {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.35rem 0;
-        border-bottom: none;
-        font-size: 1rem;
-      }
-
-      #expenseTableBody td:last-child button,
-      #incomeTableBody td:last-child button {
-        width: 100%;
-        margin-top: 0.5rem;
-      }
-    }
-
-    /* iOS Bottom Navigation */
-    .ios-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #ffffff;
-      border-top: 1px solid #e5e7eb;
-      display: flex;
-      justify-content: space-around;
-      padding: 0.4rem 0;
-      z-index: 99999;
-    }
-
-    .ios-nav button {
-      background: none;
-      border: none;
-      font-size: 0.9rem;
-      padding: 0.6rem 0.5rem;
-      color: #2563eb;
-      flex: 1;
-    }
-
-    .ios-nav button:active {
-      background: #f3f4f6;
+      button { width: 100%; padding: 0.8rem; font-size: 1rem; }
+      .summary { flex-direction: column; }
+      .card { padding: 1rem; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+      th, td { padding: 0.7rem; font-size: 0.95rem; }
+      .category-pill { font-size: 0.8rem; padding: 0.25rem 0.6rem; }
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-
-    <h1 id="topSection">Kaylie's Monthly Budget</h1>
+    <div class="header-row">
+      <div>
+        <h1>Kaylie's Monthly Budget</h1>
+        <div class="small">Data is auto synced to Firebase.</div>
+      </div>
+      <div>
+        <label for="monthSelect">Month</label>
+        <input type="month" id="monthSelect" />
+      </div>
+    </div>
 
     <div class="summary">
       <div class="card">
@@ -190,18 +101,15 @@
       </div>
     </div>
 
-    <label for="monthSelect">Month</label>
-    <input type="month" id="monthSelect" />
-
-    <h2 id="incomeSection">Add Income</h2>
+    <h2>Add Income</h2>
     <div class="row">
       <div>
-        <label>Name</label>
+        <label for="incomeName">Name</label>
         <input type="text" id="incomeName" placeholder="Paycheck, Bonus..." />
       </div>
       <div>
-        <label>Amount</label>
-        <input type="number" id="incomeAmount" min="0" step="0.01" />
+        <label for="incomeAmount">Amount</label>
+        <input type="number" id="incomeAmount" min="0" step="0.01" placeholder="e.g. 1500.00" />
       </div>
       <div>
         <label>&nbsp;</label>
@@ -209,14 +117,14 @@
       </div>
     </div>
 
-    <h2 id="expenseSection">Add Expense</h2>
+    <h2>Add Expense</h2>
     <div class="row">
       <div>
-        <label>Name</label>
-        <input type="text" id="expenseName" />
+        <label for="expenseName">Name</label>
+        <input type="text" id="expenseName" placeholder="Groceries, Uber..." />
       </div>
       <div>
-        <label>Category</label>
+        <label for="expenseCategory">Category</label>
         <select id="expenseCategory">
           <option value="Food">Food</option>
           <option value="Entertainment">Entertainment</option>
@@ -226,8 +134,8 @@
         </select>
       </div>
       <div>
-        <label>Amount</label>
-        <input type="number" id="expenseAmount" min="0" step="0.01" />
+        <label for="expenseAmount">Amount</label>
+        <input type="number" id="expenseAmount" min="0" step="0.01" placeholder="e.g. 45.90" />
       </div>
       <div>
         <label>&nbsp;</label>
@@ -235,24 +143,37 @@
       </div>
     </div>
 
-    <h2>Income Entries</h2>
-    <table><tbody id="incomeTableBody"></tbody></table>
+    <div class="header-row">
+      <h2>Income Entries</h2>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th class="right">Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="incomeTableBody"></tbody>
+    </table>
 
-    <h2>Expenses</h2>
-    <button class="btn-secondary" id="clearMonthBtn">Clear this month</button>
-    <table><tbody id="expenseTableBody"></tbody></table>
-
-    <h2 id="settingsSection">Settings</h2>
-    <p class="small">More features coming soon.</p>
-
-  </div>
-
-  <!-- iOS Bottom Navigation -->
-  <div class="ios-nav">
-    <button data-target="topSection">Budget</button>
-    <button data-target="incomeSection">Income</button>
-    <button data-target="expenseSection">Expenses</button>
-    <button data-target="settingsSection">Settings</button>
+    <div class="header-row">
+      <h2>Expenses</h2>
+      <button class="btn-secondary" id="clearMonthBtn">Clear this month</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th class="right">Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="expenseTableBody"></tbody>
+    </table>
   </div>
 
   <script type="module" src="app.js"></script>
