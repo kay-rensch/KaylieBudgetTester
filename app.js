@@ -163,9 +163,9 @@ function subscribeToMonth() {
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>Date: ${inc.date}</td>
-        <td>Name: ${inc.name}</td>
-        <td>Amount: ${formatCurrency(inc.amount)}</td>
+        <td><span>Date</span>: ${inc.date}</td>
+        <td><span>Name</span>: ${inc.name}</td>
+        <td><span>Amount</span>: ${formatCurrency(inc.amount)}</td>
         <td><button class="btn-danger">Delete</button></td>
       `;
       tr.querySelector("button").onclick = () => deleteIncome(inc.id);
@@ -193,10 +193,10 @@ function subscribeToMonth() {
 
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>Date: ${exp.date}</td>
-        <td>Name: ${exp.name}</td>
-        <td>Category: <span class="category-pill">${exp.category}</span></td>
-        <td>Amount: ${formatCurrency(exp.amount)}</td>
+        <td><span>Date</span>: ${exp.date}</td>
+        <td><span>Name</span>: ${exp.name}</td>
+        <td><span>Category</span>: <span class="category-pill">${exp.category}</span></td>
+        <td><span>Amount</span>: ${formatCurrency(exp.amount)}</td>
         <td><button class="btn-danger">Delete</button></td>
       `;
       tr.querySelector("button").onclick = () => deleteExpense(exp.id);
@@ -210,25 +210,4 @@ function subscribeToMonth() {
 
     remainingAmountEl.textContent = formatCurrency(remaining);
 
-    remainingCard.classList.toggle("good", remaining >= 0);
-    remainingCard.classList.toggle("bad", remaining < 0);
-  });
-}
-
-/* iOS Bottom Navigation Scroll */
-document.querySelectorAll(".ios-nav button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const targetId = btn.getAttribute("data-target");
-    const el = document.getElementById(targetId);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-});
-
-(function init() {
-  const nowMonth = new Date().toISOString().slice(0, 7);
-  monthSelect.value = nowMonth;
-
-  monthSelect.addEventListener("change", subscribeToMonth);
-
-  addIncomeBtn.addEventListener("click", addIncome);
-  add
+    remainingCard.class
