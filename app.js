@@ -34,13 +34,13 @@ const remainingCard = document.getElementById('remainingCard');
 const incomeName = document.getElementById('incomeName');
 const incomeAmount = document.getElementById('incomeAmount');
 const addIncomeBtn = document.getElementById('addIncomeBtn');
-const incomeGrid = document.getElementById('incomeGrid');
+const incomeTableBody = document.getElementById('incomeTableBody');
 
 const expenseName = document.getElementById('expenseName');
 const expenseCategory = document.getElementById('expenseCategory');
 const expenseAmount = document.getElementById('expenseAmount');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
-const expenseGrid = document.getElementById('expenseGrid');
+const expenseTableBody = document.getElementById('expenseTableBody');
 
 const clearMonthBtn = document.getElementById('clearMonthBtn');
 
@@ -52,7 +52,7 @@ function formatCurrency(num) {
   return '$' + (Number(num) || 0).toFixed(2);
 }
 
-/* Confetti */
+/* iPhone Confetti */
 function launchConfetti() {
   const count = 45;
 
@@ -154,23 +154,22 @@ function subscribeToMonth() {
   if (unsubscribeExpenses) unsubscribeExpenses();
 
   unsubscribeIncome = onSnapshot(incomeCol, (snapshot) => {
-    incomeGrid.innerHTML = "";
+    incomeTableBody.innerHTML = "";
     let totalIncome = 0;
 
     snapshot.forEach(docSnap => {
       const inc = { id: docSnap.id, ...docSnap.data() };
       totalIncome += Number(inc.amount) || 0;
 
-      const card = document.createElement("div");
-      card.classList.add("entry-card");
-      card.innerHTML = `
-        <div><span>Date</span>: ${inc.date}</div>
-        <div><span>Name</span>: ${inc.name}</div>
-        <div><span>Amount</span>: ${formatCurrency(inc.amount)}</div>
-        <button class="btn-danger">Delete</button>
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>Date: ${inc.date}</td>
+        <td>Name: ${inc.name}</td>
+        <td>Amount: ${formatCurrency(inc.amount)}</td>
+        <td><button class="btn-danger">Delete</button></td>
       `;
-      card.querySelector("button").onclick = () => deleteIncome(inc.id);
-      incomeGrid.appendChild(card);
+      tr.querySelector("button").onclick = () => deleteIncome(inc.id);
+      incomeTableBody.appendChild(tr);
     });
 
     plannedIncomeEl.textContent = formatCurrency(totalIncome);
@@ -185,24 +184,23 @@ function subscribeToMonth() {
   });
 
   unsubscribeExpenses = onSnapshot(expCol, (snapshot) => {
-    expenseGrid.innerHTML = "";
+    expenseTableBody.innerHTML = "";
     let total = 0;
 
     snapshot.forEach(docSnap => {
       const exp = { id: docSnap.id, ...docSnap.data() };
       total += Number(exp.amount) || 0;
 
-      const card = document.createElement("div");
-      card.classList.add("entry-card");
-      card.innerHTML = `
-        <div><span>Date</span>: ${exp.date}</div>
-        <div><span>Name</span>: ${exp.name}</div>
-        <div><span>Category</span>: <span class="category-pill">${exp.category}</span></div>
-        <div><span>Amount</span>: ${formatCurrency(exp.amount)}</div>
-        <button class="btn-danger">Delete</button>
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>Date: ${exp.date}</td>
+        <td>Name: ${exp.name}</td>
+        <td>Category: <span class="category-pill">${exp.category}</span></td>
+        <td>Amount: ${formatCurrency(exp.amount)}</td>
+        <td><button class="btn-danger">Delete</button></td>
       `;
-      card.querySelector("button").onclick = () => deleteExpense(exp.id);
-      expenseGrid.appendChild(card);
+      tr.querySelector("button").onclick = () => deleteExpense(exp.id);
+      expenseTableBody.appendChild(tr);
     });
 
     totalSpentEl.textContent = formatCurrency(total);
@@ -214,3 +212,23 @@ function subscribeToMonth() {
 
     remainingCard.classList.toggle("good", remaining >= 0);
     remainingCard.classList.toggle("bad", remaining < 0);
+  });
+}
+
+/* iOS Bottom Navigation Scroll */
+document.querySelectorAll(".ios-nav button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.getAttribute("data-target");
+    const el = document.getElementById(targetId);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
+
+(function init() {
+  const nowMonth = new Date().toISOString().slice(0, 7);
+  monthSelect.value = nowMonth;
+
+  monthSelect.addEventListener("change", subscribeToMonth);
+
+  addIncomeBtn.addEventListener("click", addIncome);
+  add
