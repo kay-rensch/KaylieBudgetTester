@@ -149,11 +149,9 @@
         font-size: 1rem;
       }
 
-      /* 2-column card grid ONLY on vertical iPhone */
+      /* OLD SPACING RESTORED: full-width stacked cards */
       .entry-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
+        display: block;
       }
 
       .entry-card {
@@ -161,6 +159,7 @@
         padding: 1rem;
         border-radius: 0.6rem;
         box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        margin-bottom: 0.75rem;
       }
 
       .entry-card div {
