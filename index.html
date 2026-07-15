@@ -121,10 +121,11 @@
       body { padding: 1rem; padding-bottom: 80px; }
       .container { padding: 1rem; }
 
-      /* FIX: Vertical spacing for Add Income & Add Expense */
+      /* Tight vertical spacing */
       .row {
-        flex-direction: column;
-        gap: 0.4rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 0.35rem;
         margin-bottom: 1rem;
       }
 
@@ -144,42 +145,37 @@
 
       button {
         width: 100%;
-        margin-top: 0.3rem;
+        margin-top: 0.4rem;
         font-size: 1rem;
       }
 
-      /* FIX: Income & Expense entries formatting */
-      table thead { display: none; }
+      /* 2-column card grid for entries */
+      .entry-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
 
-      #incomeTableBody tr,
-      #expenseTableBody tr {
-        display: block;
+      .entry-card {
         background: #fff;
-        margin-bottom: 0.75rem;
         padding: 1rem;
         border-radius: 0.6rem;
         box-shadow: 0 2px 6px rgba(0,0,0,0.06);
       }
 
-      #incomeTableBody td,
-      #expenseTableBody td {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.35rem 0;
-        border-bottom: none;
-        font-size: 1rem;
+      .entry-card div {
+        margin-bottom: 0.35rem;
+        font-size: 0.95rem;
       }
 
-      #incomeTableBody td span,
-      #expenseTableBody td span {
+      .entry-card div span {
         font-weight: 600;
         color: #111;
       }
 
-      #incomeTableBody td:last-child button,
-      #expenseTableBody td:last-child button {
+      .entry-card button {
         width: 100%;
-        margin-top: 0.7rem;
+        margin-top: 0.5rem;
       }
     }
 
@@ -278,11 +274,11 @@
     </div>
 
     <h2>Income Entries</h2>
-    <table><tbody id="incomeTableBody"></tbody></table>
+    <div id="incomeGrid" class="entry-grid"></div>
 
     <h2>Expenses</h2>
     <button class="btn-secondary" id="clearMonthBtn">Clear this month</button>
-    <table><tbody id="expenseTableBody"></tbody></table>
+    <div id="expenseGrid" class="entry-grid"></div>
 
     <h2 id="settingsSection">Settings</h2>
     <p class="small">More features coming soon.</p>
