@@ -25,6 +25,12 @@
       margin-bottom: 0.25rem;
     }
 
+    /* NEW: spacing class */
+    .section-spaced {
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -84,6 +90,12 @@
     .card-value {
       font-size: 1.1rem;
       font-weight: 600;
+    }
+
+    /* NEW: Remaining card always slightly green */
+    #remainingCard {
+      background: #f0fdf4;   /* soft green */
+      border-color: #86efac; /* light green border */
     }
 
     table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
@@ -148,7 +160,8 @@
 
     <button class="btn-danger" id="clearMonthBtn" style="margin-bottom:1rem;">Clear this month</button>
 
-    <h2>Add Income</h2>
+    <!-- Add Income with spacing -->
+    <h2 class="section-spaced">Add Income</h2>
     <div class="row">
       <div>
         <label>Name</label>
@@ -164,7 +177,8 @@
       </div>
     </div>
 
-    <h2>Add Expense</h2>
+    <!-- Add Expense with spacing -->
+    <h2 class="section-spaced">Add Expense</h2>
     <div class="row">
       <div>
         <label>Name</label>
